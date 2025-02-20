@@ -1,0 +1,24 @@
+<ng-container *ngIf="{
+  authUser: authUser$ | async,
+  country: country$ | async
+} as obs">
+
+  <form class="m-auto max-w-[1200px] border border-gray-100">
+    <farmer-upload-assets [farmerForm]="farmerForm"></farmer-upload-assets>
+    <farmer-personal-details-form [farmerForm]="farmerForm" [profileDetails]="obs.authUser"></farmer-personal-details-form>
+    <farmer-farm-details-form [farmerForm]="farmerForm"></farmer-farm-details-form>
+    <farmer-location-form [farmerForm]="farmerForm" [country]="obs.country"></farmer-location-form>
+    <farmer-products-form 
+      [productCurrency]="obs.country?.currency"
+      [farmerForm]="farmerForm"
+      ></farmer-products-form>
+
+  
+    <div class="flex flex-row justify-end items-center mt-6 p-3 border-t border-t-gray-100">
+      <button (click)="onCancel()" mat-button>{{ 'GLOBAL.CANCEL' | translate }}</button>
+      <button (click)="onSubmit()" mat-button>{{ 'GLOBAL.SUBMIT' | translate }}</button>
+    </div>
+  
+  </form>
+</ng-container>
+

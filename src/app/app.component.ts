@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateConfigurationService } from '../assets/i18n/translate-configuration.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'client';
+  
+  constructor(
+    private translateConfigrationService: TranslateConfigurationService) {
+  }3
 }

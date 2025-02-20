@@ -1,0 +1,42 @@
+<div class="w-full mt-6 px-3 border-b border-b-gray-100">
+  <div class="w-full grid grid-cols-2">
+    <div class="flex flex-col justify-center">
+      <p class="text-primary text-2xl">{{ 'FARMER.PERSONAL_DETAILS' | translate }}</p>
+      <p class="text-secondary text-xl">{{ 'FARMER.PROVIDE_NECCESSARY_INFORMATIONS' | translate }}</p>
+    </div>
+    <div>
+      <form [formGroup]="personalDetailsForm">
+        <div class="flex flex-row gap-2 mb-4">
+          <div class="w-full">
+            <mat-form-field subscriptSizing="dynamic" class="w-full">
+              <mat-label>{{ 'FARMER.FORM.FIRST_NAME' | translate }}</mat-label>
+              <input [formControl]="formControl.firstName" matInput type="text"/>
+            </mat-form-field>
+            <validation-message [control]="formControl.firstName"></validation-message>
+          </div>
+          <div class="w-full">
+            <mat-form-field subscriptSizing="dynamic" class="w-full">
+              <mat-label>{{ 'FARMER.FORM.LAST_NAME' | translate }}</mat-label>
+              <input [formControl]="formControl.lastName" matInput type="text"/>
+            </mat-form-field>
+            <validation-message [control]="formControl.lastName"></validation-message>
+          </div>     
+        </div>
+        <div class="w-full mb-4">
+          <mat-form-field subscriptSizing="dynamic" class="w-full">
+            <mat-label>{{ 'FARMER.FORM.EMAIL' | translate }}</mat-label>
+            <input [formControl]="formControl.email" matInput type="text"/>
+          </mat-form-field>
+          <validation-message [control]="formControl.email"></validation-message>
+        </div>
+        <div class="w-full mb-4">
+          <mat-form-field subscriptSizing="dynamic" class="w-full">
+            <mat-label>{{ 'FARMER.FORM.PHONE' | translate }}</mat-label>
+            <input [formControl]="formControl.phone" matInput type="text"/>
+          </mat-form-field>
+          <validation-message [control]="formControl.phone"></validation-message>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

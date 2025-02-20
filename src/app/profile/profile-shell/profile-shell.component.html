@@ -1,0 +1,32 @@
+<ng-container *ngIf="{
+  currentUser: currentUser$ | async,
+  loading: loading$ | async
+} as obs">
+  <div class="bg-gray-100 w-full full-height relative">
+    <div class="max-w-[1200px] m-auto grid grid-cols-12 gap-1 pt-4">
+      <div class="col-span-3">
+        <div class="max-w-72 flex flex-col justify-start bg-white">
+          <div class="font-semibold text-2xl p-4">{{ 'PROFILE.PROFILE_LABEL' | translate }}</div>
+        @for(profileTab of profileTabs; track profileTab) {
+          <a
+            disableRipple
+            class="profile-tab"
+            [routerLink]="profileTab.url"
+            routerLinkActive="active-profile-tab">
+              <div class="tab-active-item">
+                {{ profileTab.name | translate }}
+              </div>
+          </a>
+        }
+        </div>
+        </div>
+        <div class="col-span-9">
+          <router-outlet></router-outlet>
+        </div>
+      <div *ngIf="obs.loading" class="absolute w-full full-height bg-gray-300/50 flex justify-center items-center">
+        <mat-spinner [diameter]="50"></mat-spinner>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

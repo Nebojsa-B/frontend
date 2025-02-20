@@ -1,0 +1,12 @@
+<ng-container *ngIf="{
+farmer: farmer$ | async,
+customerReviews: customerReviews$ | async
+} as obs">
+  <div class="m-auto max-w-[1200px] border border-gray-200">
+    <farmer-view 
+      [farmer]="obs.farmer"
+      [customerReviews]="obs.customerReviews" 
+      [farmerId]="farmerId">
+    </farmer-view>
+  </div>
+</ng-container>

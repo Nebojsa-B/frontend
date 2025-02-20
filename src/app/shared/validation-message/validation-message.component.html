@@ -1,0 +1,10 @@
+<ng-container>
+  <div
+    *ngIf="control?.errors && (control?.dirty || control?.touched)"
+    class="validator"
+  >
+    <p>
+      {{ message(control!.errors) | translate : valuesForJson() }}
+    </p>
+  </div>
+</ng-container>

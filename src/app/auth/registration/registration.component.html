@@ -1,0 +1,66 @@
+<ng-container *ngIf="{
+  countryDataWithLoading: countryDataWithLoading$ | async
+} as obs">
+  <div class="absolute w-screen h-screen flex items-center justify-center">
+    <div class="shadow-2xl bg-white border border-gray-300 top-border-line rounded flex flex-col justify-center px-8 pt-8 w-fit">
+      <p class="text-primary m-auto text-2xl mb-8">{{'LOGIN.REGISTRATION' | translate}}</p>
+    <form class="flex flex-col w-[350px] gap-3" [formGroup]="registrationForm">
+      <mat-form-field class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'LOGIN.FORM.FIRST_NAME' | translate }}</mat-label>
+        <input [formControl]="formControl.firstName" matInput />
+      </mat-form-field>
+      <validation-message [control]="formControl.firstName"></validation-message>
+      <mat-form-field class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'LOGIN.FORM.LAST_NAME' | translate }}</mat-label>
+        <input [formControl]="formControl.lastName" matInput />
+      </mat-form-field>
+      <validation-message [control]="formControl.lastName"></validation-message>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>{{ 'LOGIN.FORM.CHOOSE_A_COUNTRY' | translate }}</mat-label>
+        <mat-select [formControl]="formControl.countryId">
+          @if(formControl.countryId.value){
+            <mat-select-trigger>
+              <div class="w-full flex flex-row gap-2 items-center">
+                <img class="w-6 h-6" [src]="selectedCountry.countryFlagUrl" alt="Country Flag">
+                <div>{{ selectedCountry.name }}</div>
+              </div>
+            </mat-select-trigger>
+          }
+          @for(country of obs.countryDataWithLoading!.data; track country){
+            <mat-option class="w-full" [value]="country.id" (click)="chosenCountry(country)">
+              <div class="w-full flex flex-row gap-2 items-center">
+                <img class="w-8 h-8" [src]="country.countryFlagUrl" alt="Country Flag">
+                <div>{{country.name}}</div>
+              </div>
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <validation-message [control]="formControl.countryId"></validation-message>
+      <mat-form-field subscriptSizing='dynamic'>
+        <mat-label>{{ 'LOGIN.FORM.EMAIL' | translate }}</mat-label>
+        <input [formControl]="formControl.email" matInput type="text"/>
+      </mat-form-field>
+      <validation-message [control]="formControl.email"></validation-message>
+      <mat-form-field subscriptSizing='dynamic'>
+        <mat-label>{{ 'LOGIN.FORM.PASSWORD' | translate }}</mat-label>
+        <input [formControl]="formControl.password" matInput [type]="showPassword ? 'text' : 'password'"/>
+      </mat-form-field>
+      <validation-message [control]="formControl.password"></validation-message>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>{{ 'LOGIN.FORM.REPEAT_PASSWORD' | translate }}</mat-label>
+        <input [formControl]="formControl.repeatPassword" [type]="showPassword ? 'text' : 'password'" matInput/>
+        <button (click)="showPassword = !showPassword; $event.preventDefault()" mat-icon-button matSuffix>
+          <span class="material-symbols-outlined text-gray-500">
+          {{showPassword ? 'visibility_off' : 'visibility'}}
+          </span>
+        </button>
+      </mat-form-field>
+      <validation-message [control]="formControl.repeatPassword"></validation-message>
+
+      <button mat-raised-button color="primary" class="w-full bg-primary text-white mb-8 mt-[2rem]" (click)="signUp()">{{ 'LOGIN.SIGN_UP' | translate }}</button>
+    </form>
+  
+    </div>
+  </div>
+</ng-container>

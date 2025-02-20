@@ -1,0 +1,68 @@
+<ng-container *ngIf="{
+  countries: countries$ | async,
+  user: user$ | async,
+  hasQueryParams: hasQueryParams$ | async
+} as obs">
+  <div class="h-16 flex flex-row justify-between items-center relative toolbar-bottom-shadow">
+    <div class="flex items-center">
+      <button *ngIf="isDashboard" class="relative" (click)="openSearchDialog()" mat-icon-button>
+        <span class="material-symbols-outlined">search</span>
+        <span *ngIf="obs.hasQueryParams" class="absolute w-2 h-2 rounded-full bg-secondary border border-primary "></span>
+      </button>
+      <button (click)="redirectTo('dashboard')" matTooltip="Dashboard" *ngIf="!isDashboard" mat-icon-button>
+        <span class="material-symbols-outlined text-primary">map</span>
+      </button>
+    </div>
+    <div class="flex flex-row gap-3 items-center">
+      <button *ngIf="!obs.user?.farmerId" style="background-color: rgb(var(--color-secondary)); color: rgb(var(--color-primary))" (click)="redirectTo('farmer/create')" mat-raised-button>
+        {{ "DASHBOARD.BECOME_A_FARMER" | translate }}
+      </button>
+      <!-- <button [matMenuTriggerFor]="notificationMenu" mat-icon-button>
+        <span class="material-symbols-outlined">notifications</span>
+      </button> -->
+
+        <buton [matMenuTriggerFor]="profileMenu" [matMenuTriggerData]="obs.user" class="w-10 h-10 rounded-full bg-primary flex flex-row justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-secondary">
+          <span class="text-2xl text-secondary">
+            {{obs.user?.firstName?.slice(0,1)}}{{obs.user?.lastName?.slice(0,1)}}
+          </span>
+        </buton>
+    </div>
+
+  </div>
+
+  <mat-menu #profileMenu="matMenu">
+    <div class="p-4 flex gap-2 border-b border-b-gray-300">
+      <div class="w-10 h-10 flex justify-center items-center bg-primary text-secondary rounded-full">
+        <span class="text-2xl">{{ shortcutName(obs.user) }}</span>
+      </div>
+      <div class="flex flex-col">
+        <div class="text-primary">{{ obs.user?.firstName }} {{ obs.user?.lastName }}</div>
+        <div class="text-secondary">{{ obs.user?.email }}</div>
+        <button (click)="viewProfile()" class="mt-4" mat-raised-button>{{ 'DASHBOARD.VIEW_YOUR_PROFILE' | translate }}</button>
+      </div>
+    </div>
+  
+    @for(menuItem of dashboardMenu; track menuItem) {
+      <button (click)="handleDashboardMenuItem(menuItem.id)" [matMenuTriggerFor]="menuItem.isSubMenu ? languagesMenu : null" mat-menu-item>
+        <span class="flex items-center gap-2">
+          <span class="material-symbols-outlined">{{menuItem.icon}}</span>
+          <span>{{menuItem.name | translate}}</span>
+        </span>
+      </button>
+    }
+  </mat-menu>
+
+  <mat-menu #languagesMenu="matMenu">
+    <button (click)="switchLanguage(Languages.en)" mat-menu-item>English</button>
+    <button (click)="switchLanguage(Languages.rs)" mat-menu-item>Serbia</button>
+  </mat-menu>
+
+</ng-container>
+<router-outlet></router-outlet>
+
+<mat-menu #notificationMenu="matMenu">
+  <div class="border-b border-b-gray-300 p-4">
+    <div class="text-primary">Notifications</div>
+  </div>
+  <div class="p-4">Missing implementation for notification. Good reference is how it is done on youtube.</div>
+</mat-menu>

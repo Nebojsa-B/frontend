@@ -1,0 +1,92 @@
+<ng-container *ngIf="{
+  currentUser: currentUser$ | async,
+  loading: loading$ | async
+} as obs">
+  @if(farmer){
+    <div class="w-full border border-gray-100">
+      <div class="w-full relative">
+        <img class="w-full h-80 object-cover bg-gray-700" [src]="farmer.user.coverImageUrl" alt="Cover"/>
+        <img class="left-4 h-48 w-48 absolute rounded-full object-cover -bottom-14 z-10 border-2 border-white" alt="profile" [src]="farmer.user.profileImageUrl" />
+        <div class="absolute w-full h-full bg-gray-900/50 top-0">
+          <div class="text-white flex flex-col justify-center items-center w-full h-full">
+            <div class="font-semibold text-6xl">{{farmer.farm.farmName}}</div>
+            <div class="italic text-lg flex items-center justify-center">
+              <span class="text-3xl text-gray-400 font-bold">“</span>
+              <span> {{farmer.farm.motto}} </span>
+              <span class="text-3xl text-gray-400 font-bold">”</span></div>
+          </div>
+          <div class="absolute bottom-7 text-white w-full">
+            <div class="flex items-center justify-center gap-2">
+              <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined">home</span>
+                <span>{{farmer.user.location.address}}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined">call</span>
+                <span>{{farmer.user.phone}}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined">alternate_email</span>
+                <span>{{farmer.user.email}}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined">description</span>
+                <span>{{farmer.farm.farmNumber}}</span>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="grid grid-cols-12 relative">
+        <mat-tab-group class="farmer-view-tab-group col-span-9" mat-stretch-tabs="false" mat-align-tabs="end" animationDuration="0ms">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <span class="material-symbols-outlined">
+                nutrition
+                </span>
+              <span class="text-xl">{{'FARMER.VIEW.PRODUCTS' | translate}} ({{farmer.products.length}})</span>
+            </ng-template>
+              <farmer-view-products 
+              [products]="farmer.products"
+              [loading]="obs.loading"
+              (emitProductForCart)="addToCart($event)"
+              (emitProductForBuy)="buyNow($event)"
+              ></farmer-view-products>
+          </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span class="material-symbols-outlined">
+                  star
+                </span>
+                <span class="text-xl">{{ 'FARMER.VIEW.CUSTOMER_REVIEWS' | translate }} ({{customerReviews!.length}})</span>
+              </ng-template>
+               <farmer-view-customer-reviews 
+                [customerReviews]="customerReviews"
+                [currentUser]="obs.currentUser"
+                (newCustomerReview)="createCustomerReview($event, obs.currentUser)">
+              </farmer-view-customer-reviews>
+            </mat-tab>
+          <mat-tab label="Story">
+            <ng-template mat-tab-label>
+              <span class="material-symbols-outlined text-lg">
+                info
+                </span>
+              <span class="text-xl">{{ 'FARMER.VIEW.ABOUT' | translate }}</span>
+            </ng-template>
+            <farmer-view-about [farmer]="farmer">
+            </farmer-view-about>
+          </mat-tab>
+        </mat-tab-group>
+        <div class="p-2 w-full col-span-3">
+          <farmer-view-map 
+            [location]="farmer.user.location"
+          ></farmer-view-map>
+        </div>
+
+        <div *ngIf="obs.loading" class="absolute w-full h-full flex items-center justify-center bg-gray-300/20 z-10">
+          <mat-spinner [diameter]="50"></mat-spinner>
+        </div>
+      </div>
+  }
+</ng-container>

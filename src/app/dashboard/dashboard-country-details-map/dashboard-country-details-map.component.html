@@ -1,0 +1,7 @@
+<div *ngIf="countryDetails && farmers" class="absolute top-4 right-0 z-1000 border-b border-b-secondary" style="background-color: rgba(255, 255, 255, 0.8);">
+  <img [src]="countryDetails?.countryFlagUrl" alt="Country Image"/>
+  <div class="p-2">
+    <p class="text-primary font-medium">{{'DASHBOARD.TOTAL_FARMERS' | translate}}: {{farmers!.length}}</p>
+    <p class="text-primary font-medium">{{'DASHBOARD.TOTAL_PRODUCTS' | translate}}: {{getTotalProducts()}}</p>
+  </div>
+</div>

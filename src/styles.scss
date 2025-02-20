@@ -1,1 +1,158 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+// $client-primary: mat.define-palette(mat.$indigo-palette);
+// $client-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// // The warn palette is optional (defaults to red).
+// $client-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+// $client-theme: mat.define-light-theme((
+//   color: (
+//     primary: $client-primary,
+//     accent: $client-accent,
+//     warn: $client-warn,
+//   ),
+//   typography: mat.define-typography-config(),
+//   density: 0
+// ));
+
+$exai-primary: mat.define-palette(
+  (
+    100: var(--color-primary),
+    500: var(--color-primary),
+    700: var(--color-primary),
+    contrast: (
+      100: var(--color-primary-contrast),
+      500: var(--color-primary-contrast),
+      700: var(--color-primary-contrast),
+    ),
+  )
+) !default;
+
+$exai-accent: mat.define-palette(
+  (
+    100: var(--color-accent-rgb),
+    500: var(--color-accent-rgb),
+    700: var(--color-accent-rgb),
+    contrast: (
+      100: var(--color-accent-contrast-rgb),
+      500: var(--color-accent-contrast-rgb),
+      700: var(--color-accent-contrast-rgb),
+    ),
+  )
+) !default;
+
+// The warn palette is optional (defaults to red).
+$exai-warn: mat.define-palette(
+  (
+    100: var(--color-warn-rgb),
+    500: var(--color-warn-rgb),
+    700: var(--color-warn-rgb),
+    contrast: (
+      100: var(--color-warn-contrast-rgb),
+      500: var(--color-warn-contrast-rgb),
+      700: var(--color-warn-contrast-rgb),
+    ),
+  )
+) !default;
+
+$exai-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $exai-primary,
+      accent: $exai-accent,
+      warn: $exai-warn,
+      is-dark: false,
+    ),
+    density: 0,
+  )
+) !default;
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($exai-theme);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 27, 77, 63;
+    --color-secondary: 221, 198, 171;
+    --color-warn-rgb: rgb(244, 67, 54);
+    --color-white: 255,250,250;
+
+    --mdc-snackbar-container-color: rgb(var(--color-white));
+    --mdc-snackbar-supporting-text-color: rgb(var(--color-primary));
+    --mat-snack-bar-button-color: rgb(var(--color-secondary));
+  }
+}
+
+body {
+  margin: 0;
+}
+// leaflet marker popup style
+.leaflet-popup-content-wrapper {
+  border-radius: 4px;
+}
+
+.leaflet-popup-content{
+  margin: 0;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  background: white;
+}
+
+.marker-popup-content {
+  padding: 4px;
+}
+
+.marker-popup-image {
+  background-color: lightgray;
+  width: 150px;
+  height: 100px;
+}
+
+.marker-popup-location {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  align-items: center;
+}
+
+.marker-cluster div {
+  color: white;
+  background-color: rgba(var(--color-primary), 0.6);
+}
+
+.marker-cluster {
+  background-color: rgba(var(--color-primary), 0.6);
+}
+
+mat-spinner circle {
+  stroke: rgb(var(--color-secondary));
+}
+
+.custom-snackbar {
+  border-left: 2px solid rgb(var(--color-primary));
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Open Sans,Roboto,Arial,Helvetica,sans-serif,SimSun }

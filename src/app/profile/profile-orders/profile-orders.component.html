@@ -1,0 +1,86 @@
+<ng-container *ngIf="{
+  orders: orders$ | async,
+  loading: loading$ | async
+} as obs">
+
+  <div class="flex flex-col gap-2">
+    <div class="h-16 bg-white rounded border border-gray-200">
+      <div class="flex justify-between items-center">
+        <div class="flex gap-1 items-center p-4 h-full">
+          <span class="material-symbols-outlined text-secondary">shopping_cart</span>
+          <div class="text-xl text-primary">Orders</div>
+        </div>
+        <button *ngIf="obs.orders?.length" (click)="exportBill(obs.orders)" mat-button>
+          <span class="flex justify-normal items-center"> 
+            <span class="material-symbols-outlined text-secondary">
+              receipt_long
+            </span>
+            <span class="text-primary">
+              Export Bill
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <ng-container *ngIf="!obs.loading, else loading">
+    
+    <div class="bg-white border border-gray-200 p-4 min-h-72 flex flex-col gap-4 rounded">
+      @for(order of obs.orders; track order){
+        @for(orderProduct of order.orderProducts; track orderProduct) {
+          <div class="border border-gray-300 rounded flex relative w-full">
+            <img class="w-48 h-48 object-cover rounded" [src]="orderProduct.product.productImages[0]" alt="Product"/>
+            <div class="flex flex-col gap-2 m-2 w-full">
+              <div><span class="text-gray-400">Name:</span> {{orderProduct.product.name}}</div>
+              <div><span class="text-gray-400">Description:</span> {{orderProduct.product.description}}</div>
+              <div><span class="text-gray-400">Delivery Time:</span> {{orderProduct.product.startDate | date}} - {{orderProduct.product.endDate | date}}</div>
+              <div class="flex justify-between items-center mt-auto">
+                <div>
+                  <span class="text-gray-400">Quantity: </span>
+                  {{orderProduct.quantity}}
+                </div>
+                <div class="text-nowrap text-2xl">RSD {{orderProduct.price * orderProduct.quantity}}</div>
+              </div>
+            </div>
+            <button
+              (click)="reviewCustomer(orderProduct)"
+              matTooltip="Review Farmer" 
+              class="absolute top-0 right-0" 
+              mat-icon-button>
+              <span class="material-symbols-outlined text-gray-400">rate_review</span>
+            </button>
+          </div>
+        }
+      } @empty {
+        <div class="w-full h-full flex flex-col justify-center items-center gap-2">
+          <span class="material-symbols-outlined text-gray-200 text-8xl">shopping_cart</span>
+          <div class="text-gray-300">{{ 'PROFILE.NO_ORDERS' | translate }}</div>
+          <button (click)="redirectTo('dashboard')" mat-stroked-button>
+            <span class="text-primary p-2">
+              <span class="font-medium">{{ 'PROFILE.EXPLORE_FARMERS' | translate }}</span>
+            </span>
+          </button>
+        </div>
+      }
+    </div>
+    </ng-container>
+  </div>
+
+  <ng-template #reportContent>
+    <report-content [orders]="obs.orders"></report-content>
+  </ng-template>
+
+
+<report-content
+  class="hidden"
+  [orders]="obs.orders">
+</report-content>
+
+</ng-container>
+
+<ng-template #loading>
+  <div class="flex justify-center items-center bg-white rounded border border-gray-200 h-72">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</ng-template>
+
+

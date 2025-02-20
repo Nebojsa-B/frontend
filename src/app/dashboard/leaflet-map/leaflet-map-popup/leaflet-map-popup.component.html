@@ -1,0 +1,36 @@
+@if(farmer){
+  <div class="marker-popup-container">
+    <div (click)="viewFarmer(farmer.id)" (mouseover)="isHover = true" (mouseleave)="isHover=false" class="relative cursor-pointer">
+      <img class="w-full h-28 object-cover rounded" [src]="farmer.user.coverImageUrl" alt="Cover"/>
+      <img class="absolute -bottom-6 left-1 object-cover w-12 h-12 rounded-full" [src]="farmer.user.profileImageUrl" alt="Profile"/>
+      <div *ngIf="isHover" class="w-full flex justify-end absolute bottom-[2px]">
+        <button class="right-0" mat-button>
+          <div class="flex gap-1 items-center text-primary bg-white rounded p-1 hover:bg-gray-100">
+            <span>View Farmer</span>
+            <span class="material-symbols-outlined text-base">
+              arrow_forward
+              </span>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="marker-popup-content">
+  <div class="marker-popup-type mt-7">
+    <div class="text-base">{{farmer.user.firstName}} {{farmer.user.lastName}}</div>
+    <div class="flex items-center mb-1">
+      <span class="material-symbols-outlined text-primary text-xs">
+        location_on
+        </span>
+      <span class="text-gray-600 text-sm">
+        {{farmer.user.location.city}}
+      </span>
+    </div>
+    <div class="flex flex-wrap gap-1">
+      @for(product of farmer.products; track product){
+        <div class="text-primary font-semibold bg-secondary p-1 border border-gray-300 rounded">{{product.name}}</div>
+      }
+    </div>
+  </div>
+  </div>
+  </div>
+}

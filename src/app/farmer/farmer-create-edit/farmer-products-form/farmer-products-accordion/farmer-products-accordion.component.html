@@ -1,0 +1,50 @@
+@if(products){  
+  @for(product of products; track product) {
+    <mat-accordion class="headers-align" multi>
+      <div class="w-full">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="text-primary">
+                Product {{$index + 1}}
+              </div>
+            </mat-panel-title>
+            <mat-panel-description>
+              <div></div>
+              <button (click)="removeProduct($index)" color="warn" mat-icon-button>
+                <span class="material-symbols-outlined text-gray-700">
+                  delete
+                </span>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            <div class="flex gap-2 mt-4">
+
+               <div class="flex gap-2">
+                <div class="flex flex-col gap-1">
+                  <div *ngFor="let productImage of product.productImages; index as i" (click)="selectImage(i, productImage)">
+                    <img class="w-12 h-12 min-w-12 rounded cursor-pointer object-cover" [src]="productImage"  alt="Product"/>
+                 </div>
+                </div>
+                
+                 <div>
+                  <img class="min-w-[19rem] w-[19rem] h-[19rem] rounded object-cover" [src]="selectedImages[$index]" alt="Product"/>
+                 </div>
+               </div>
+              <div class="flex flex-col gap-2 text-lg">
+                <div><span class="text-gray-500">{{'FARMER.FORM.PRODUCT_TYPE' | translate}}:</span> {{product.type}}</div>
+                  <div><span class="text-gray-500">{{'FARMER.FORM.PRODUCT_NAME' | translate}}:</span> {{product.name}}</div>
+                  <div><span class="text-gray-500">{{'FARMER.FORM.QUANTITY' | translate}}:</span> {{product.quantity}}</div>
+                  <div><span class="text-gray-500">{{'FARMER.FORM.PRICE' | translate}}:</span> {{product.price}}</div>
+                <div><span class="text-gray-500">{{'FARMER.FORM.DELIVERY_TIME' | translate}}:</span> {{ product.startDate | date }} - {{ product.endDate | date }}</div>
+                <div><span class="text-gray-500">{{'FARMER.FORM.DESCRIPTION' | translate}}:</span> {{product.description}}</div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      </mat-accordion>
+    
+  }
+}

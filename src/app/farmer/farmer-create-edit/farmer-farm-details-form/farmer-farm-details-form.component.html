@@ -1,0 +1,41 @@
+<div class="w-full mt-6 px-3 border-b border-b-gray-100">
+  <div class="w-full grid grid-cols-2">
+    <div>
+      <p class="text-primary text-2xl">{{ 'FARMER.FARM_DETAILS' | translate }}</p>
+      <p class="text-secondary text-xl">{{ 'FARMER.PROVIDE_NECCESSARY_INFORMATIONS' | translate }}</p>
+    </div>
+    <div>
+      <form class="flex flex-col gap-2" [formGroup]="farmDetailsForm">
+        <div class="flex gap-2">
+          <div class="w-full">
+            <mat-form-field  class="w-full">
+              <mat-label>{{ 'FARMER.FORM.FARM_NAME' | translate }}</mat-label>
+              <input [formControl]="formControl.farmName" matInput type="text"/>
+            </mat-form-field>
+            <validation-message [control]="formControl.farmName"></validation-message>
+          </div>
+          <div class="w-full">
+            <mat-form-field class="w-full">
+              <mat-label>{{ 'FARMER.FORM.FARM_NUMBER' | translate }}</mat-label>
+              <input [formControl]="formControl.farmNumber" matInput type="text"/>
+            </mat-form-field>
+            <validation-message [control]="formControl.farmNumber"></validation-message>
+          </div>
+        </div>
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'FARMER.FORM.MOTTO' | translate }}</mat-label>
+          <input [formControl]="formControl.motto" matInput type="text"/>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'FARMER.FORM.YOUR_STORY' | translate }}</mat-label>
+          <textarea
+            [formControl]="formControl.description" 
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="3"></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>

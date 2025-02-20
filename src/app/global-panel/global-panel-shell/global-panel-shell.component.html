@@ -1,0 +1,11 @@
+
+@if({
+  users: users$ | async,
+  farmers: farmers$ | async
+}; as obs) {
+  @if(obs.users && obs.farmers) {
+    <global-panel-charts 
+      [users]="obs.users">
+    </global-panel-charts>
+  }
+}

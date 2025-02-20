@@ -1,0 +1,51 @@
+.report-content {
+  font-size: 6px;
+  width: 200px;
+}
+
+.order-container {
+
+}
+
+.product-farm-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.description {
+  display: inline-block;
+  width: 4rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.header {
+  color: rgb(var(--color-primary));
+  margin-bottom: 4px;
+}
+
+.order {
+  color: rgb(var(--color-secondary));
+  font-style: bold;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.description-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.hl {
+  margin-top: 10px;
+  border-bottom: 2px solid #333;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+}
+

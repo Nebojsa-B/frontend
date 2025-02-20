@@ -1,0 +1,24 @@
+@if(location){
+  <div class="border border-gray-200 p-4">
+    <div class="w-full h-60">
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+    </div>
+  
+    <div class="flex flex-col gap-2 mt-2">
+      <div class="flex gap-1 items-center">
+        <img class="w-6 h-6" [src]="location.country.countryFlagUrl"/>
+        <span>{{location.country.name}}</span>
+      </div>
+      <div class="flex gap-1 items-center">
+        <span class="material-symbols-outlined">location_city</span>
+        <span>{{location.city}}</span>
+      </div>
+      <div class="flex gap-1 items-center">
+        <span class="material-symbols-outlined">location_on</span>
+        <span>{{location.address}}</span>
+      </div>
+    </div>
+  </div>
+}

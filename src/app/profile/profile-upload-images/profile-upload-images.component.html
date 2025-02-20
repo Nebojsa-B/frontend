@@ -1,0 +1,49 @@
+<ng-container *ngIf="{
+  coverImageFileUpload: coverImageFileUpload$ | async,
+  profileImageFileUpload: profileImageFileUpload$ | async
+} as obs">
+
+<div class="w-full bg-gray-50  h-72 relative border border-gray-200">
+  <div class="h-full flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-gray-100" (click)="inputCoverUpload.click()">
+    <div *ngIf="!obs.coverImageFileUpload">
+      <span class="material-symbols-outlined text-5xl text-primary">
+        upload
+      </span>
+      <span class="text-secondary">{{ 'PROFILE.UPLOAD_COVER_IMAGE' | translate }}</span>
+    </div>
+    <img *ngIf="obs.coverImageFileUpload" [src]="obs.coverImageFileUpload.fileUrl" class="object-cover cover-img w-full" alt="Farmer Cover"/>
+  </div>
+
+  
+
+  <div (click)="inputProfileUpload.click()" class="bg-gray-50 hover:bg-gray-100 rounded-full border-2 border-white absolute left-4 -bottom-24 h-48 w-48 cursor-pointer">
+    <div class="flex flex-col justify-center items-center h-full border-2 border-white rounded-full" *ngIf="!obs.profileImageFileUpload">
+      <span class="material-symbols-outlined text-primary text-4xl">
+        upload
+        </span>
+        <span class="text-secondary">{{ 'PROFILE.UPLOAD_PROFILE_IMAGE' | translate }}</span>
+    </div>
+    
+    <img *ngIf="obs.profileImageFileUpload" [src]="obs.profileImageFileUpload.fileUrl" class="object-cover profile-img rounded-full" alt="Farmer Cover"/>
+
+  </div>
+</div>
+
+<form>
+  <input 
+  type="file" 
+  class="hidden" 
+  imageUpload
+  (fileDropped)="uploadCoverImage($event)" 
+  accept="image/*" 
+  #inputCoverUpload/>
+<input 
+  type="file" 
+  class="hidden"
+  imageUpload 
+  (fileDropped)="uploadProfileImage($event)" 
+  accept="image/*" 
+  #inputProfileUpload/>
+</form>
+
+</ng-container>

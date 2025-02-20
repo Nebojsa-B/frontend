@@ -1,0 +1,36 @@
+<div class="report-content">
+  @for(order of orders; track order) {
+    <div class="order-container">
+      <div class="order header">Order - {{ order.createdAt| date:'medium' }} (RSD {{order.totalPrice}})</div>
+      @for(product of order.orderProducts; track product) {
+       <div class="product-farm-container">
+        <div>
+          <p class="header">Product (Price: {{product.price}} Quantity: {{ product.quantity }})</p>
+          <p>Type: {{ product.product.type }}</p>
+          <p>Name: {{ product.product.name }}</p>
+          <!-- <p class="description-container">Description: <span class="description"> {{ product.product.description }}</span></p> -->
+          <p>Delivery Time: {{ product.product.startDate | date }} - {{ product.product.endDate | date }}</p>
+         </div>
+         <div>
+          <p class="header">Farm</p>
+          <p>Farm Name: {{product.product.farmer.farm.farmName}}</p>
+          <p>Farm Number: {{product.product.farmer.farm.farmNumber}}</p>
+          <!-- <p class="description-container">Description: <span class="description"> {{product.product.farmer.farm.description}}</span></p> -->
+          <p>Motto: {{product.product.farmer.farm.motto}}</p>
+         </div> 
+       </div>
+      }
+
+    </div>
+  }
+
+  <hr class="hl">
+
+  <div class="bottom">
+    <div>Total Orders: {{ orders?.length }}</div>
+    <div>Total Price: RSD {{totalPrice}}</div>
+  </div>
+
+</div>
+
+

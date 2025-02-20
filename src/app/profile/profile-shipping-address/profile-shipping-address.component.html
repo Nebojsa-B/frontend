@@ -1,0 +1,44 @@
+<ng-container *ngIf="{
+  countryDetail: countryDetail$ | async
+} as obs">
+  <div class="flex flex-col gap-2">
+    <div class="h-16 bg-white rounded border border-gray-200">
+      <div class="flex gap-1 items-center p-4 h-full">
+        <span class="material-symbols-outlined text-secondary">home</span>
+        <div class="text-xl text-primary">{{ 'PROFILE.SHIPPING_ADDRESS' | translate }}</div>
+      </div>
+    </div>
+    <div class="bg-white border border-gray-200 p-4">
+      <form [formGroup]="locationForm">
+        <div class="flex gap-2 mb-2">
+          <div class="w-full">
+            <mat-form-field class="w-full">
+              <mat-label>{{ 'PROFILE.FORM.COUNTRY_NAME' | translate }}</mat-label>
+              <input [formControl]="formControl.name" matInput type="text"/>
+              <img class="w-7 h-7 mx-1" [src]="obs.countryDetail?.countryFlagUrl" matIconPrefix/>
+            </mat-form-field>
+            <validation-message [control]="formControl.name"></validation-message>
+          </div>
+          <div class="w-full">
+            <mat-form-field class="w-full">
+              <mat-label>{{ 'PROFILE.FORM.CITY' | translate }}</mat-label>
+              <input [formControl]="formControl.city" matInput type="text"/>
+            </mat-form-field>
+            <validation-message [control]="formControl.city"></validation-message>
+          </div>
+        </div>
+        <div class="mb-2">
+          <mat-form-field class="w-full">
+            <mat-label>{{ 'PROFILE.FORM.ADDRESS' | translate }}</mat-label>
+            <input [formControl]="formControl.address" matInput type="text"/>
+          </mat-form-field>
+          <validation-message [control]="formControl.address"></validation-message>
+        </div>
+  
+        <div class="w-full flex justify-end">
+          <button (click)="saveLocation()" mat-raised-button>{{ 'GLOBAL.SAVE' | translate }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>

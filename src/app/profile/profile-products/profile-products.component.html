@@ -1,0 +1,115 @@
+<ng-container *ngIf="{
+  products: products$ | async,
+  currentUser: currentUser$ | async
+} as obs">
+  <div class="flex flex-col gap-2">
+    <div class="h-16 bg-white rounded border border-gray-200">
+      <div class="flex gap-1 items-center p-4 h-full">
+        <span class="material-symbols-outlined text-secondary">inventory_2</span>
+        <div class="text-xl text-primary">{{ 'PROFILE.PRODUCTS' | translate }}</div>
+      </div>
+    </div>
+  
+    <div class="bg-white border border-gray-200 p-4">
+      <div class="px-3">
+        <form *ngIf="!isPreview" [formGroup]="productDetailsForm">
+          <div>
+              <div>
+                <div class="flex flex-row gap-2 mb-2">
+                  <div class="w-full">
+                    <mat-form-field class="w-full">
+                      <mat-label>{{ 'FARMER.FORM.PRODUCT_TYPE' | translate }}</mat-label>
+                      <input [formControl]="formControl.type" matInput type="text"/>
+                    </mat-form-field>
+                    <validation-message [control]="formControl.type"></validation-message>
+                  </div>
+                  <div class="w-full">
+                    <mat-form-field class="w-full">
+                      <mat-label>{{ 'FARMER.FORM.PRODUCT_NAME' | translate }}</mat-label>
+                      <input [formControl]="formControl.name" matInput type="text"/>
+                    </mat-form-field>
+                    <validation-message [control]="formControl.name"></validation-message>
+                  </div>
+                </div>
+                <div class="flex flex-row gap-2 mb-2">
+                  <div class="w-full">
+                    <mat-form-field class="w-full">
+                      <mat-label>{{ 'FARMER.FORM.QUANTITY' | translate }}</mat-label>
+                      <input [formControl]="formControl.quantity" matInput type="number"/>
+                      <span class="text-primary" matSuffix>kg</span>
+                    </mat-form-field>
+                    <validation-message [control]="formControl.quantity"></validation-message>
+                  </div>
+                  <div class="w-full">
+                    <mat-form-field class="w-full">
+                      <mat-label>{{ 'FARMER.FORM.PRICE' | translate }}</mat-label>
+                      <input [formControl]="formControl.price" matInput type="number"/>
+                      <span class="text-primary" matSuffix>{{productCurrency}}</span>
+                    </mat-form-field>
+                    <validation-message [control]="formControl.price"></validation-message>
+                  </div>
+                </div>
+                <div class="flex flex-row gap-2 mb-2">
+                  <div class="w-full">
+                    <mat-form-field class="w-full">
+                      <mat-label>{{ 'FARMER.FORM.START_DATE' | translate }}</mat-label>
+                      <input [formControl]="formControl.startDate" matInput [matDatepicker]="startDatePicker" (focus)="startDatePicker.open()" readonly />
+                    </mat-form-field>
+                    <validation-message [control]="formControl.startDate"></validation-message>
+                  </div>
+                  <div class="w-full">
+                    <mat-form-field class="w-full">
+                      <mat-label>{{ 'FARMER.FORM.END_DATE' | translate }}</mat-label>
+                      <input [formControl]="formControl.endDate" matInput [matDatepicker]="endDatePicker" (focus)="endDatePicker.open()" readonly />
+                    </mat-form-field>
+                    <validation-message [control]="formControl.endDate"></validation-message>
+                  </div>
+                </div>
+                <div class="w-full mb-2">
+                  <mat-form-field class="w-full">
+                    <mat-label>{{ 'FARMER.FORM.DESCRIPTION' | translate }}</mat-label>
+                    <textarea
+                      [formControl]="formControl.description"
+                      matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="3"></textarea>
+                  </mat-form-field>
+                  <validation-message [control]="formControl.description"></validation-message>
+                </div>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+        
+                  <div *ngIf="formControl.productImages.value.length !== 6" (click)="inputProductUpload.click()" class="w-full h-24 rounded-2xl border-2 border-dotted flex flex-col justify-center items-center cursor-pointer hover:bg-gray-50 mb-2">
+                    <div class="material-symbols-outlined text-primary text-2xl">upload</div>
+                    <div class="text-secondary">{{ 'FARMER.FORM.UPLOAD_PRODUCT_IMAGES' | translate }}</div>
+                  </div>
+        
+                <div class="w-full flex justify-end my-6">
+                  <button mat-raised-button (click)="saveProduct(obs.currentUser?.farmer?.id)" color="primary">{{ 'GLOBAL.SAVE' | translate }}</button>
+                </div>
+              </div>
+            </div>
+        </form>
+        <ng-container *ngIf="isPreview">
+          <profile-products-accordion 
+          [products]="obs.products"
+          ></profile-products-accordion>
+
+          <div class="w-full flex justify-end mt-3">
+            <button (click)="addProduct()" mat-raised-button>Add Product</button>
+          </div>
+        </ng-container>
+          
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<input 
+  type="file" 
+  class="hidden" 
+  imageUpload
+  (fileDropped)="uploadProductImage($event)" 
+  accept="image/*" 
+  #inputProductUpload/>

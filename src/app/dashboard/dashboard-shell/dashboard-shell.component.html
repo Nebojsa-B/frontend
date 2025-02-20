@@ -1,0 +1,14 @@
+
+<ng-container *ngIf="{
+farmers: farmers$ | async,
+loading: loading$ | async,
+countryDetails: countryDetails$ | async
+} as obs">
+  @if(!obs.loading && obs.countryDetails){
+    <app-leaflet-map
+      [countryDetails]="obs.countryDetails" 
+      [farmers]="obs.farmers">
+    </app-leaflet-map>
+  }
+  
+</ng-container>

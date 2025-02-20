@@ -1,0 +1,29 @@
+<div class="absolute w-screen h-screen flex items-center justify-center">
+    <div class="shadow-2xl bg-white border border-gray-300 top-border-line rounded flex flex-col justify-center px-8 pt-8 w-fit">
+      <p class="text-primary m-auto text-2xl mb-8">{{'LOGIN.WELCOME_BACK' | translate}} !</p>
+    <form class="flex flex-col gap-2 w-[350px]" [formGroup]="loginForm">
+      <mat-form-field subscriptSizing='dynamic'>
+        <mat-label>{{'LOGIN.FORM.EMAIL' | translate}}</mat-label>
+        <input [formControl]="formControl.email" matInput type="text"/>
+      </mat-form-field>
+      <validation-message [control]="formControl.email"></validation-message>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>{{ 'LOGIN.FORM.PASSWORD' | translate }}</mat-label>
+        <input [formControl]="formControl.password" [type]="showPassword ? 'text' : 'password'" matInput/>
+        <button (click)="showPassword = !showPassword" mat-icon-button matSuffix>
+          <span class="material-symbols-outlined text-gray-500">
+          {{showPassword ? 'visibility_off' : 'visibility'}}
+          </span>
+        </button>
+      </mat-form-field>
+      <validation-message [control]="formControl.password"></validation-message>
+      <div class="w-full flex flex-row justify-end items-center">
+         <span class="text-gray-400 hover:text-primary hover:underline cursor-pointer">{{'LOGIN.FORGOT_PASSWORD' | translate}} ?</span>
+      </div>
+    </form>
+
+    <button mat-raised-button color="primary" class="w-full bg-primary text-white mb-8 mt-[2rem]" (click)="onSubmit()">{{ 'LOGIN.SIGN_IN' | translate }}</button>
+    
+    <span class="text-gray-400 text-sm m-auto mb-2">{{ 'LOGIN.DONT_HAVE_ACCOUNT_YET' | translate }}? <span class="underline cursor-pointer hover:text-primary" (click)="redirectTo('auth/register')">{{ 'LOGIN.SIGN_UP' | translate }}</span></span>
+    </div>
+  </div>

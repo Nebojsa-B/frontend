@@ -1,0 +1,31 @@
+<div class="flex justify-between items-center w-full full-height">
+  <div *ngIf="users" class="flex flex-col items-center">
+    <div class="font-bold text-3xl text-primary">Total Users: {{ users.length }}</div>
+    <apx-chart
+      [series]="userCountryCount"
+      [chart]="userChart.chart"
+      [labels]="userChart.labels"
+      [responsive]="userChart.responsive"
+    ></apx-chart>
+  </div>
+    
+  
+      <div *ngIf="farmers" class="flex flex-col">
+        <div class="font-bold text-3xl text-primary">Total Farmers: {{ farmers.length }}</div>
+        <apx-chart
+          [series]="farmerCountryCount"
+          [chart]="farmerChart.chart"
+          [labels]="farmerChart.labels"
+          [responsive]="farmerChart.responsive"
+        ></apx-chart>
+      </div>
+      <div *ngIf="farmers" class="flex flex-col">
+        <div class="font-bold text-3xl text-primary">Total Products: {{ products }}</div>
+        <apx-chart
+          [series]="productsCountryCount"
+          [chart]="productChart.chart"
+          [labels]="productChart.labels"
+          [responsive]="productChart.responsive"
+        ></apx-chart>
+      </div>
+</div>

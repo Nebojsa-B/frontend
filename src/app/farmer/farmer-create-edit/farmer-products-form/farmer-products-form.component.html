@@ -1,0 +1,119 @@
+<div class="w-full">
+  <div class="w-full grid grid-cols-2 mt-6 px-3 border-b border-b-gray-50">
+    <div>
+      <p class="text-primary text-2xl">{{ 'FARMER.PRODUCT_DETAILS' | translate }}</p>
+      <p class="text-secondary text-xl">{{ 'FARMER.PROVIDE_NECCESSARY_INFORMATIONS' | translate }}</p>
+      <div class="flex gap-1 flex-wrap mt-6">
+        @for(productImage of lastProductFormGroup.value.productImages; track productImage) {
+          <div class="relative">
+            <img class="w-28 h-28 object-cover rounded-2xl hover:opacity-70" [src]="productImage" alt="product"/>
+            <span (click)="removeProductImage($index)" class="material-symbols-outlined absolute top-0 right-1 text-gray-900 cursor-pointer">
+              close
+              </span>
+          </div>
+        }
+      </div>
+    </div>
+    <div>
+      <form [formGroup]="farmerProductForm">
+        <div formArrayName="products">
+          @for(product of products.controls; track product){
+            @if($index === products.length - 1){
+            <div [formGroupName]="products.length - 1">
+              <div class="flex flex-row gap-2 mb-2">
+                <div class="w-full">
+                  <mat-form-field class="w-full">
+                    <mat-label>{{ 'FARMER.FORM.PRODUCT_TYPE' | translate }}</mat-label>
+                    <input formControlName="type" matInput type="text"/>
+                  </mat-form-field>
+                  <validation-message [control]="formControl('type')"></validation-message>
+                </div>
+                <div class="w-full">
+                  <mat-form-field class="w-full">
+                    <mat-label>{{ 'FARMER.FORM.PRODUCT_NAME' | translate }}</mat-label>
+                    <input formControlName="name" matInput type="text"/>
+                  </mat-form-field>
+                  <validation-message [control]="formControl('name')"></validation-message>
+                </div>
+              </div>
+              <div class="flex flex-row gap-2 mb-2">
+                <div class="w-full">
+                  <mat-form-field class="w-full">
+                    <mat-label>{{ 'FARMER.FORM.QUANTITY' | translate }}</mat-label>
+                    <input formControlName="quantity" matInput type="number"/>
+                    <span class="text-primary" matSuffix>kg</span>
+                  </mat-form-field>
+                  <validation-message [control]="formControl('quantity')"></validation-message>
+                </div>
+                <div class="w-full">
+                  <mat-form-field class="w-full">
+                    <mat-label>{{ 'FARMER.FORM.PRICE' | translate }}</mat-label>
+                    <input formControlName="price" matInput type="number"/>
+                    <span class="text-primary" matSuffix>{{productCurrency}}</span>
+                  </mat-form-field>
+                  <validation-message [control]="formControl('price')"></validation-message>
+                </div>
+              </div>
+              <div class="flex flex-row gap-2 mb-2">
+                <div class="w-full">
+                  <mat-form-field class="w-full">
+                    <mat-label>{{ 'FARMER.FORM.START_DATE' | translate }}</mat-label>
+                    <input formControlName="startDate" matInput [matDatepicker]="startDatePicker" (focus)="startDatePicker.open()" readonly />
+                  </mat-form-field>
+                  <validation-message [control]="formControl('startDate')"></validation-message>
+                </div>
+                <div class="w-full">
+                  <mat-form-field class="w-full">
+                    <mat-label>{{ 'FARMER.FORM.END_DATE' | translate }}</mat-label>
+                    <input formControlName="endDate" matInput [matDatepicker]="endDatePicker" (focus)="endDatePicker.open()" readonly />
+                  </mat-form-field>
+                  <validation-message [control]="formControl('endDate')"></validation-message>
+                </div>
+              </div>
+              <div class="w-full mb-2">
+                <mat-form-field class="w-full">
+                  <mat-label>{{ 'FARMER.FORM.DESCRIPTION' | translate }}</mat-label>
+                  <textarea
+                    formControlName="description" 
+                    matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="3"></textarea>
+                </mat-form-field>
+                <validation-message [control]="formControl('description')"></validation-message>
+              </div>
+              <mat-datepicker #startDatePicker></mat-datepicker>
+              <mat-datepicker #endDatePicker></mat-datepicker>
+      
+                <div *ngIf="product.value.productImages.length !== 6" (click)="inputProductUpload.click()" class="w-full h-24 rounded-2xl border-2 border-dotted flex flex-col justify-center items-center cursor-pointer hover:bg-gray-50 mb-2">
+                  <div class="material-symbols-outlined text-primary text-2xl">upload</div>
+                  <div class="text-secondary">{{ 'FARMER.FORM.UPLOAD_PRODUCT_IMAGES' | translate }}</div>
+                </div>
+      
+              <div class="w-full flex justify-end my-6">
+                <button mat-raised-button (click)="addProduct()" color="primary">{{ 'FARMER.FORM.ADD_PRODUCT' | translate }}</button>
+              </div>
+            </div>
+          }
+          }
+          </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="px-3">
+    <farmer-products-accordion 
+      [products]="products.value.slice(0,-1)"
+      (removeProductIndex)="removeProduct($event)"
+      ></farmer-products-accordion>
+  </div>
+</div>
+
+
+<input 
+  type="file" 
+  class="hidden" 
+  imageUpload
+  (fileDropped)="uploadProductImage($event)" 
+  accept="image/*" 
+  #inputProductUpload/>

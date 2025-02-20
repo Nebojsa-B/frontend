@@ -1,0 +1,63 @@
+<div class="mt-10 ml-2 relative">
+  @for(product of products; track product){
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header class="bg-gray-50 border border-gray-200">
+          <mat-panel-title class="flex justify-around">  
+            <div>
+              <span class="text-gray-500">{{ 'FARMER.VIEW.TYPE' | translate }}: </span>
+              <span class="font-semibold text-primary">{{ product.type }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500">{{ 'FARMER.VIEW.NAME' | translate }}: </span>
+              <span class="font-semibold text-primary">{{ product.name }}</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+         <div class="flex gap-1 mt-2">
+          <div class="flex flex-col gap-1">
+            @for(productImage of product.productImages; track productImage){
+              <img class="min-w-11 w-11 h-11 object-cover rounded cursor-pointer" [src]="productImage" alt="Product" />
+            }
+          </div>
+          <div>
+            <img class="min-w-72 w-72 h-72 object-cover rounded" [src]="product.productImages[0]" alt="Product" />
+          </div>
+  
+          <div class="flex flex-col ml-2 w-full">
+            <div class="font-bold text-4xl mb-4">RSD {{ product.price }}/kg</div>
+            <div class="text-gray-500">{{ 'FARMER.VIEW.DESCRIPTION' | translate }}:</div>
+            <div>{{ product.description }}</div>
+            <div class="text-gray-500">{{ 'FARMER.VIEW.TOTAL_QUANTITY' | translate }} (kg):</div>
+            <div>{{ product.quantity }}</div>
+            <div class="text-gray-500">{{ 'FARMER.VIEW.DELIVERY_TIME' | translate }}:</div>
+            <div>{{ product.startDate | date:'d/M/yy' }} - {{ product.endDate | date:'d/M/yy' }}</div>
+            <hr class="border-t border-t-secondary my-3" />
+             <div class="flex items-center gap-2">
+              <div>{{ 'FARMER.VIEW.QUANTITY' | translate }}(kg):</div>
+                  <mat-form-field subscriptSizing="dynamic" class="max-w-24">
+                    <input min="0" [max]="product.quantity" [formControl]="formControl.quantity" type="number" matInput/>
+                  </mat-form-field>
+
+                <div class="rounded w-fit ml-auto">
+                  <button (click)="addToCart(product)" mat-stroked-button>
+                    <span class="flex gap-2 text-primary p-2">
+                      <span class="font-medium">{{ 'FARMER.VIEW.ADD_TO_CART' | translate }}</span>
+                    </span>
+                  </button>
+                </div>    
+                <div class="bg-primary rounded w-fit ml-auto">
+                  <button (click)="buyNow(product)" mat-stroked-button>
+                    <span class="flex gap-2 text-white p-2">
+                      <span class="font-medium">{{ 'FARMER.VIEW.BUY_NOW' | translate }}</span>
+                    </span>
+                  </button>
+                </div>
+              
+             </div>
+          </div>
+         </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  }
+</div>

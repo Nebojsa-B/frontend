@@ -1,0 +1,49 @@
+<ng-container *ngIf="{
+  countriesDropdown: countriesDropdown$ | async
+} as obs">
+  <div class="w-full border-b border-b-gray-100">
+    <div class="w-full my-6 px-3 grid grid-cols-2">
+      <div>
+        <p class="text-primary text-2xl">{{ 'FARMER.LOCATION_DETAILS' | translate }}</p>
+        <p class="text-secondary text-xl">{{ 'FARMER.FIND_YOUR_LOCATION' | translate }}</p>
+      </div>
+      <div>
+        <form [formGroup]="locationForm">
+          <div class="flex gap-2 mb-2">
+            <div class="w-full">
+              <mat-form-field class="w-full">
+                <mat-label>{{ 'FARMER.FORM.COUNTRY_NAME' | translate }}</mat-label>
+                <input [formControl]="formControl.name" matInput type="text"/>
+                <img class="w-7 h-7 mx-1" [src]="formControl.countryFlagUrl.value" matIconPrefix/>
+              </mat-form-field>
+              <validation-message [control]="formControl.name"></validation-message>
+            </div>
+            <div class="w-full">
+              <mat-form-field class="w-full">
+                <mat-label>{{ 'FARMER.FORM.CITY' | translate }}</mat-label>
+                <input [formControl]="formControl.city" matInput type="text"/>
+              </mat-form-field>
+              <validation-message [control]="formControl.city"></validation-message>
+            </div>
+          </div>
+          <div class="w-full mb-2">
+            <mat-form-field class="w-full">
+              <mat-label>{{ 'FARMER.FORM.ADDRESS' | translate }}</mat-label>
+              <input [formControl]="formControl.address" matInput type="text"/>
+            </mat-form-field>
+            <validation-message [control]="formControl.address"></validation-message>
+          </div>
+        </form>
+
+        <farmer-location-map 
+          [location]="locationFormValues" 
+          (pointsChanged)="pointsChanged($event)">
+        </farmer-location-map>
+        
+        <validation-message [control]="formControl.lat"></validation-message>
+        <validation-message [control]="formControl.lng"></validation-message>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

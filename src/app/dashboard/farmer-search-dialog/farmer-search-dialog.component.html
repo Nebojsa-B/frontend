@@ -1,0 +1,15 @@
+<div>
+  <div class="flex justify-between items-center bg-gray-100 border-b border-b-gray-200 text-gray-800 p-2 mb-2">
+    <div class="text-xl font-normal">{{'DASHBOARD.SEARCH.SEARCH_LABEL' | translate}}</div>
+    <button (click)="closeDialog()" mat-icon-button>
+      <span class="material-symbols-outlined">
+        close
+        </span>
+    </button>
+  </div>
+  <div class="p-2">
+    <farmer-search-form 
+      [searchQueryParams]="searchQueryParams">
+    </farmer-search-form>
+  </div>
+</div>

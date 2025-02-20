@@ -1,0 +1,29 @@
+<div class="min-w-80">
+  <div class="flex items-center gap-2  m-4">
+    <div class="w-10 h-10 bg-primary text-secondary rounded-full flex justify-center items-center">{{shortcutName()}}</div>
+    <div>{{data.currentUser.firstName}} {{data.currentUser.lastName}}</div>
+  </div>
+  <div class="mx-4 mb-4">
+    <form [formGroup]="customerReview">
+      <div class="flex justify-start">
+        <star-rating (ratingUpdated)="updatedStars($event)"></star-rating>
+      </div>
+      <mat-form-field class="w-full">
+        <mat-label>{{ 'FARMER.VIEW.COMMENT' | translate }}</mat-label>
+        <textarea
+          matInput
+          [formControl]="formControl.comment"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="3"></textarea>
+      </mat-form-field>
+      <div class="flex justify-end">
+        <button mat-dialog-close mat-button>{{ 'GLOBAL.CANCEL' | translate }}</button>
+        <span matTooltip="Select stars" [matTooltipDisabled]="formControl.stars.value">
+          <button [disabled]="!formControl.stars.value" [mat-dialog-close]="customerReview.value" mat-button>{{ 'GLOBAL.SUBMIT' | translate }}</button>
+        </span>
+        
+      </div>
+    </form>
+  </div>
+</div>

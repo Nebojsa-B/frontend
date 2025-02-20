@@ -1,0 +1,70 @@
+<div class="ml-2 mb-2">
+  <div class="w-full mt-10">
+    <div class="flex gap-4 w-full">
+      <div class="bg-gray-100 border border-gray-200 flex flex-col gap-2 justify-center items-center w-full h-48 rounded">
+        <div class="text-gray-900 text-7xl">{{getStarAverage()}}</div>
+        <star-rating [rating]="getStarAverage()"></star-rating>
+      </div>
+      <div class="bg-gray-100 border border-gray-200 w-full h-48 rounded">
+        <div class="flex flex-col gap-1 items-center justify-center mt-2">
+          <div class="flex items-center"> 
+            <star-rating [isReadOnly]="true" [rating]="5"></star-rating>
+            <div>({{ starCount(5) }}) </div>
+          </div>
+          <div class="flex items-center"> 
+            <star-rating [isReadOnly]="true" [rating]="4"></star-rating>
+            <div>({{ starCount(4) }}) </div>
+          </div>
+          <div class="flex items-center"> 
+            <star-rating [isReadOnly]="true" [rating]="3"></star-rating>
+            <div>({{ starCount(3) }}) </div>
+          </div>
+          <div class="flex items-center"> 
+            <star-rating [isReadOnly]="true" [rating]="2"></star-rating>
+            <div>({{ starCount(2) }}) </div>
+          </div>
+          <div class="flex items-center"> 
+            <star-rating [isReadOnly]="true" [rating]="1"></star-rating>
+            <div>({{ starCount(1) }}) </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+  
+  <div class="flex justify-end my-4">
+    <button (click)="openDialog()" mat-button>
+      <span class="flex justify-center items-center">
+        <span class="material-symbols-outlined">add</span>
+        <span>{{ 'FARMER.VIEW.ADD_REVIEW' | translate }}</span>
+      </span>
+    </button>
+  </div>
+  
+  <div [ngClass]="{'grid-cols-2': customerReviews!.length}" class="grid gap-4">
+    @for(review of customerReviews; track review) {
+      <div class="p-4 bg-gray-100 border border-gray-200 rounded">
+        <div class="flex w-full items-center gap-2">
+          <div class="w-10 h-10 bg-primary rounded-full flex justify-center items-center text-secondary">{{getShortcutName(review)}}</div>
+          <div class="flex flex-col">
+            <div>{{review.user.firstName}} {{review.user.lastName}} <span *ngIf="review.user.id === currentUser?.id" class="text-xs font-medium text-secondary bg-primary">YOU</span></div>
+            <div class="text-gray-400 text-sm">{{review.createdAt | date}}</div>
+          </div>
+          <button class="ml-auto" *ngIf="review.user.id === currentUser?.id" (click)="removeCustomerReview(review)" mat-icon-button>
+            <span class="material-symbols-outlined text-gray-500">delete</span>
+          </button>
+        </div>
+        <div class="w-full">
+          <star-rating [isReadOnly]="true" [rating]="review.stars"></star-rating>
+        </div>
+        <div class="p-2">
+          {{review.comment}}
+        </div>
+      </div>
+    } @empty {
+      <div class="flex justify-center items-center italic text-gray-500">
+        {{ 'FARMER.VIEW.NO_ADDED_CUSTOMER_REVIEW_YET' | translate }} 
+      </div>
+    }
+  </div>
+</div>

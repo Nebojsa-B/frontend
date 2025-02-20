@@ -1,0 +1,19 @@
+
+.profile-tab {
+  @apply text-primary;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.profile-tab:hover {
+  @apply bg-gray-100;
+}
+
+.active-profile-tab {
+  @apply bg-gray-100 font-medium;
+  border-left: 2px solid rgb(var(--color-secondary));
+}
+
+.full-height {
+  height: calc(100% - 4rem);
+}
