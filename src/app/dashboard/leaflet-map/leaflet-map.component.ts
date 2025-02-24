@@ -24,13 +24,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   @Input() farmers!: Farmer[] | null;
   @Input()  countryDetails!: CountryDetail;
 
-  // countryDetails$ = new BehaviorSubject<CountryDetail | null>(null);
-
-  // private _countryDetails: CountryDetail | null = null;
-
-  // get countryDetails(): CountryDetail | null {
-  //   return this._countryDetails;
-  // }
 
   map!: L.Map;
   tileLayer!: L.TileLayer;
@@ -52,12 +45,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
     this.generateMarkers(this.farmers);
     this.applyCountryBoundary(this.countryDetails);
-
-      // this.countryDetails$.subscribe(countryDetail => {
-      //   if (countryDetail) {
-      //     this.applyCountryBoundary(countryDetail);
-      //   }
-      // });
   }
 
   generateMarkers(farmers: Farmer[] | null) {
