@@ -67,7 +67,6 @@ export class FarmerCreateEditComponent {
   onSubmit() {
     if(!this.farmerForm.value) return;
 
-    console.log('FarmerFormValue: ', this.farmerForm.value);
     const { assetsUploadForm, farm, location, user, products  } = this.farmerForm.value;
 
     this.farmerFormFacade.createFarmer({

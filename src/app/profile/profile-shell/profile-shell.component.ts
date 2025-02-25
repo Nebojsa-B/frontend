@@ -45,7 +45,6 @@ export class ProfileShellComponent {
     { name: 'PROFILE.PRODUCTS', url: 'products', requiredFarmer: true },
     { name: 'PROFILE.SHOPPING_CART', url: 'shopping-cart' },
     { name: 'PROFILE.ORDERS', url: 'orders' },
-    // { name: 'Messages', url: 'messages' },
     { name: 'Settings', url: 'settings' }
   ];
 
@@ -53,3 +52,6 @@ export class ProfileShellComponent {
     this.router.navigateByUrl(url);
   }
 }
+
+
+

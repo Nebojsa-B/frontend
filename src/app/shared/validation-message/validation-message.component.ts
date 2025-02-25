@@ -10,7 +10,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class ValidationMessageComponent implements OnInit {
   @Input() public control!: FormControl;
   @Input() secondFieldName?: string;
-  // @Input() public formArray!: FormArray;
   @Input() public array!: FormArray;
   @Input() public customName!: string;
   @Input() public customValidation!: { name: string; text: string };
