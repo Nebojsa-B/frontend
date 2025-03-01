@@ -67,6 +67,8 @@ export class FarmerCreateEditComponent {
   onSubmit() {
     if(!this.farmerForm.value) return;
 
+    this.farmerForm.markAllAsTouched();
+
     const { assetsUploadForm, farm, location, user, products  } = this.farmerForm.value;
 
     this.farmerFormFacade.createFarmer({
@@ -81,6 +83,7 @@ export class FarmerCreateEditComponent {
         ...user,
         coverImageUrl: assetsUploadForm.coverImageUrl,
         profileImageUrl: assetsUploadForm.profileImageUrl,
+        phone: user.phone.toString()
       },
       products
     } as FarmerSave);

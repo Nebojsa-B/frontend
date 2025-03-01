@@ -58,6 +58,10 @@
       </mat-form-field>
       <validation-message [control]="formControl.repeatPassword"></validation-message>
 
+      <div class="custom-error-message" *ngIf="registrationForm.errors?.['passwordsMismatch'] && registrationForm.touched">
+        Passwords do not match!
+      </div>
+
       <button mat-raised-button color="primary" class="w-full bg-primary text-white mb-8 mt-[2rem]" (click)="signUp()">{{ 'LOGIN.SIGN_UP' | translate }}</button>
     </form>
   

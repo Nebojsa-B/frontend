@@ -1,11 +1,23 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CountryDropdownFacade } from '../../shared/data-access/store/country/facade/country-dropdown.facade';
 import { Observable } from 'rxjs';
 import { CountryDropdown, CountryDropdownDataWithLoading } from '../../shared/data-access/models/country/CountryDropdown';
 import { AuthFacade } from '../../shared/data-access/store/auth/facade/auth.facade';
 import { RegistrationForm } from '../../shared/data-access/models/auth/LogIn';
 import { Router } from '@angular/router';
+
+export function passwordsMatchValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password')?.value;
+    const repeatPassword = control.get('repeatPassword')?.value;
+
+    if (password && repeatPassword && password !== repeatPassword) {
+      return { passwordsMismatch: true };
+    }
+    return null;
+  };
+}
 
 interface RegistrationFormGroup{
   firstName: FormControl;
@@ -28,7 +40,7 @@ export class RegistrationComponent {
 
   countryDataWithLoading$!: Observable<CountryDropdownDataWithLoading>;
 
-  get formControl(){
+  get formControl() {
     return this.registrationForm.controls;
   }
 
@@ -45,22 +57,24 @@ export class RegistrationComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
-    });
+    }, 
+    { validators: passwordsMatchValidator() });
 
     this.countryDataWithLoading$ = this.countryDropdownFacade.selectDataWithLoading$;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.authFacade
       .registrationSuccessAction()
       .subscribe((data) => {
         console.log('RegistrationData: ', data)
         this.router.navigateByUrl('dashboard');
       });
+
   }
 
 
-  signUp(){
+  signUp() {
     this.registrationForm.markAllAsTouched();
     
     if(this.registrationForm.valid) {

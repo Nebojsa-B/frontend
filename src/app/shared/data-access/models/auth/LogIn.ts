@@ -26,7 +26,9 @@ export interface Profile {
   countryId: number,
   location?: {
     countryId: number
-  }
+  },
+  profileImageUrl?: string,
+  coverImageUrl?: string
 }
 
 export interface PersonalDetails {

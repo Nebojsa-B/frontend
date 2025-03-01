@@ -53,7 +53,7 @@ export class AuthFacade {
   }
 
 
-  signOutSuccessAction(){
+  signOutSuccessAction() {
     return this.actionsListener$
       .pipe(ofType(Actions.AuthApi.signOutSuccess))
   }
@@ -70,7 +70,13 @@ export class AuthFacade {
       .pipe(map(({registrationResponse}) => registrationResponse))
   }
 
-  isLoggedIn(){
+  registrationFailAction(): Observable<any> {
+    return this.actionsListener$.pipe(
+      ofType(Actions.RegistrationApi.registrationFail))
+      .pipe(map(({error}) => error) )
+  }
+
+  isLoggedIn() {
     this.store.dispatch(Actions.Auth.isLoggedIn());
   }
 }

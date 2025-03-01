@@ -44,8 +44,8 @@ constructor(private fb: FormBuilder
 ){
   this.locationForm = this.fb.group({
     name: [{value: '', disabled: true}, Validators.required],
-    city: ['Belgrade', Validators.required],
-    address: ['Milorada Gavrilovca 22', Validators.required],
+    city: ['', Validators.required],
+    address: ['', Validators.required],
     lat: ['', Validators.required],
     lng: ['', Validators.required],
     countryFlagUrl: '',

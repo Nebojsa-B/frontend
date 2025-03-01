@@ -19,7 +19,7 @@ export class FarmerPersonalDetailsFormComponent {
   @Input() set profileDetails (value: Profile | null) {
     if(!value) return;
 
-    this.personalDetailsForm.patchValue({...value, phone: '0651234567'});
+    this.personalDetailsForm.patchValue({...value});
   };
 
   personalDetailsForm!: FormGroup<PersonalDetailsForm>;
