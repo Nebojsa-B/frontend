@@ -43,8 +43,8 @@ export class AuthEffect {
         this.authService.signUp(registrationForm).pipe(
           map((registrationResponse) => RegistrationApi.registrationSuccess({ registrationResponse }))
           ,
-          catchError((error) => {
-            return of(RegistrationApi.registrationFail({ error }));
+          catchError(({error}) => {
+            return of(RegistrationApi.registrationFail({ error: error.message }));
           })
         )
       )

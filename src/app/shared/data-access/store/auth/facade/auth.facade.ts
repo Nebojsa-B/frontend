@@ -70,10 +70,9 @@ export class AuthFacade {
       .pipe(map(({registrationResponse}) => registrationResponse))
   }
 
-  registrationFailAction(): Observable<any> {
+  registrationFailAction(): Observable<{error: string}> {
     return this.actionsListener$.pipe(
       ofType(Actions.RegistrationApi.registrationFail))
-      .pipe(map(({error}) => error) )
   }
 
   isLoggedIn() {

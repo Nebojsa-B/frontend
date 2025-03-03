@@ -6,6 +6,7 @@ import { CountryDropdown, CountryDropdownDataWithLoading } from '../../shared/da
 import { AuthFacade } from '../../shared/data-access/store/auth/facade/auth.facade';
 import { RegistrationForm } from '../../shared/data-access/models/auth/LogIn';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export function passwordsMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -47,7 +48,8 @@ export class RegistrationComponent {
   constructor(private fb: FormBuilder,
     private countryDropdownFacade: CountryDropdownFacade,
     private authFacade: AuthFacade,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ){
 
     this.registrationForm = this.fb.group({
@@ -67,9 +69,15 @@ export class RegistrationComponent {
     this.authFacade
       .registrationSuccessAction()
       .subscribe((data) => {
-        console.log('RegistrationData: ', data)
         this.router.navigateByUrl('dashboard');
       });
+
+    this.authFacade.registrationFailAction()
+      .subscribe((data) => {
+
+        this.snackBar.open(`${data.error}`, 'Close', { duration: 3000, horizontalPosition: 'right', verticalPosition: 'top', panelClass: 'error-snackbar' });
+
+      })
 
   }
 

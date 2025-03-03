@@ -99,8 +99,8 @@ $exai-theme: mat.define-light-theme(
     --color-white: 255,250,250;
 
     --mdc-snackbar-container-color: rgb(var(--color-white));
-    --mdc-snackbar-supporting-text-color: rgb(var(--color-primary));
-    --mat-snack-bar-button-color: rgb(var(--color-secondary));
+    --mdc-snackbar-supporting-text-color: black;
+    --mat-snack-bar-button-color: darkgray;
   }
 }
 
@@ -151,7 +151,11 @@ mat-spinner circle {
 }
 
 .custom-snackbar {
-  border-left: 2px solid rgb(var(--color-primary));
+  border-left: 2px solid green;
+}
+
+.error-snackbar {
+  border-left: 2px solid red;
 }
 
 html, body { height: 100%; }
