@@ -65,8 +65,6 @@ export class CustomLayoutComponent {
     this.countries$ = this.countryDropdownFacade.selectDataWithLoading$;
     this.user$ = this.authFacade.selectUserLoginResponse$;
 
-    this.user$.subscribe(data => console.log('Data: ', data));
-
     this.authFacade.signOutSuccessAction().pipe(takeUntilDestroyed()).subscribe(() => {
       location.reload();
     })  
