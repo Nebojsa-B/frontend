@@ -8,7 +8,7 @@ export const loginSuccess = createAction(
 
 export const loginFail = createAction(
   '[Auth/API] Login Fail',
-  props<{ error: string }>()
+  props<{ error: string | string[] }>()
 );
 
 export const isLoggedInSuccess = createAction(

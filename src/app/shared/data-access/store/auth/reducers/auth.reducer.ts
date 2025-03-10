@@ -7,7 +7,7 @@ export const authFeatureKey = 'auth';
 export interface AuthState {
   email: string | null;
   loginResponse: LoginResponse | null;
-  error: string | null;
+  error: string | string[] | null;
   isInitializing: boolean;
 }
 

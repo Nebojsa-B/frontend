@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthFacade } from '../../shared/data-access/store/auth/facade/auth.facade';
 import { LoginForm } from '../../shared/data-access/models/auth/LogIn';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface LoginFormGroup {
   email: FormControl,
@@ -23,7 +24,12 @@ export class LoginComponent implements OnInit {
   return this.loginForm.controls;
  }
 
- constructor(private authFacade: AuthFacade, private router: Router, private fb:FormBuilder){
+ constructor(
+    private authFacade: AuthFacade, 
+    private router: Router, 
+    private fb:FormBuilder,
+    private snackBar: MatSnackBar,
+  ){
   this.loginForm = this.fb.group({
     email: [ '', Validators.required ],
     password: [ '', Validators.required ]
@@ -36,6 +42,23 @@ export class LoginComponent implements OnInit {
       .subscribe((data) => {
         this.router.navigateByUrl('dashboard');
       });
+
+  this.authFacade
+      .loginFailAction()
+      .subscribe(({error}) => {
+        if(Array.isArray(error)) {
+          for(let err of error) {
+            this.showSnackBar(err);
+          }
+        } else {
+          this.showSnackBar(error);
+        }
+      });
+
+ }
+
+ showSnackBar(message: string) {
+  this.snackBar.open(message, 'Close', { duration: 3000, horizontalPosition: 'right', verticalPosition: 'top', panelClass: 'error-snackbar' });
  }
 
  onSubmit() {

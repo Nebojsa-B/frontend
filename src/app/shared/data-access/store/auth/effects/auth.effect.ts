@@ -13,8 +13,8 @@ export class AuthEffect {
         this.authService.signIn(loginForm).pipe(
           map((loginResponse) => AuthApi.loginSuccess({ loginResponse }))
           ,
-          catchError((error) => {
-            return of(AuthApi.loginFail({ error }));
+          catchError(({error}) => {
+            return of(AuthApi.loginFail({ error: error.message }));
           })
         )
       )
